@@ -61,7 +61,20 @@ async function withdrawETH() {
     const totalGasSpent = parseFloat(web3.utils.fromWei((transactionReceipt.gasUsed * transactionReceipt.effectiveGasPrice).toString(), 'ether'))
 
     const blockNumber = transactionReceipt.blockNumber
-    const blockDetails = await web3.eth.getBlock(blockNumber)
+
+    let blockDetails =
+      (await web3.eth.getBlock(blockNumber)) ||
+      (await web3.eth.getBlock(transactionReceipt.blockHash));
+
+    for (let i = 0, delay = 250; !blockDetails || blockDetails.timestamp == null; i++) {
+      if (i % 10 === 0) console.log(`Waiting for block ${blockNumber}…`);
+      await new Promise(r => setTimeout(r, delay));
+      delay = Math.min((delay * 1.5) | 0, 5000);
+      blockDetails =
+        (await web3.eth.getBlock(blockNumber)) ||
+        (await web3.eth.getBlock(transactionReceipt.blockHash));
+    }
+
     const formattedDate = formatDateToTimezone(new Date(Number(blockDetails.timestamp) * 1000),'Asia/Manila')
 
     const wethBalanceUpdated = await wethContract.methods.balanceOf(account.address).call()
@@ -74,7 +87,7 @@ async function withdrawETH() {
 
     console.log(`\n Transaction hash: \x1b[96m${transactionReceipt.transactionHash}\x1b[0m`)
 
-    console.log(` Transaction details -> \x1b[1;94mhttps://base.blockscout.com/tx/${transactionReceipt.transactionHash}\x1b[0m`)
+    console.log(` Transaction details -> \x1b[1;94mhttps://basescan.org/tx/${transactionReceipt.transactionHash}\x1b[0m`)
 
     console.log('\nTotal WETH balance: \x1b[95m' + totalWETHBalance.toFixed(8) + '\x1b[0m WETH')
 
