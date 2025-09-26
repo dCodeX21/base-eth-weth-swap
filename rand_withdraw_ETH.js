@@ -67,7 +67,7 @@ async function withdrawETH() {
       (await web3.eth.getBlock(transactionReceipt.blockHash));
 
     for (let i = 0, delay = 250; !blockDetails || blockDetails.timestamp == null; i++) {
-      if (i % 10 === 0) console.log(`Waiting for block ${blockNumber}…`);
+      if (i % 10 === 0) console.log(`\nWaiting for block \x1b[32m${blockNumber}\x1b[0m`);
       await new Promise(r => setTimeout(r, delay));
       delay = Math.min((delay * 1.5) | 0, 5000);
       blockDetails =

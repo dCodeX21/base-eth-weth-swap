@@ -116,12 +116,13 @@ function executeTransactions(sequence, index = 0) {
   let scriptName, scriptHeader;
   if (type === 'D') {
     scriptName = 'rand_deposit_ETH.js';
-    scriptHeader = `\nTransaction \x1b[97m${index + 1}\x1b[0m/${sequence.length}: Executing Deposit Transaction`;
+    scriptHeader = `Transaction \x1b[97m${index + 1}\x1b[0m/${sequence.length}: Executing Deposit Transaction`;
   } else {
     scriptName = 'rand_withdraw_ETH.js';
-    scriptHeader = `\nTransaction \x1b[97m${index + 1}\x1b[0m/${sequence.length}: Executing Withdrawal Transaction`;
+    scriptHeader = `Transaction \x1b[97m${index + 1}\x1b[0m/${sequence.length}: Executing Withdrawal Transaction`;
   }
 
+  console.log('\n-------------------------------------------------------------------------------------------------------------------');
   console.log(scriptHeader);
 
   const child = fork(`./${scriptName}`);
