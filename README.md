@@ -2,9 +2,9 @@
 
 ## Requirements
 
-- [Node.js](https://nodejs.org/dist/v22.20.0/node-v22.20.0-x64.msi) >= v18.x
+- [Node.js](https://nodejs.org/en/download) >= v18.x
 - npm >= v9 (usually bundled with Nodejs)
-- [git bash](https://github.com/git-for-windows/git/releases/download/v2.51.0.windows.1/Git-2.51.0-64-bit.exe) (for command terminal)
+- [git bash](https://git-scm.com/downloads) (for command terminal)
 <br/>
 
 ## Getting Started
